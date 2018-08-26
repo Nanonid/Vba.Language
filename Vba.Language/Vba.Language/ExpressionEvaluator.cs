@@ -64,7 +64,7 @@ namespace Vba.Language
         public override object VisitExpression(PreprocessorParser.ExpressionContext context)
         {
             if (context.comparisonOperator() != null
-                && context.expression().Count == 2)
+                && context.expression().Length == 2)
             {
                 dynamic left = VisitExpression(context.expression(0));   // could be any expression, bool, string...
                 dynamic right = VisitExpression(context.expression(1));  // could be any expression, bool, string...
@@ -100,7 +100,7 @@ namespace Vba.Language
             // check for And binary operator.
             if (context.And() != null 
                 && context.boolExpression() != null 
-                && context.boolExpression().Count == 2)
+                && context.boolExpression().Length == 2)
             {
                 var left = (bool)VisitBoolExpression(context.boolExpression(0));
                 var right = (bool)VisitBoolExpression(context.boolExpression(1));
@@ -110,7 +110,7 @@ namespace Vba.Language
             // check for Or binary operator.
             if (context.Or() != null
                 && context.boolExpression() != null
-                && context.boolExpression().Count == 2)
+                && context.boolExpression().Length == 2)
             {
                 var left = (bool)VisitBoolExpression(context.boolExpression(0));
                 var right = (bool)VisitBoolExpression(context.boolExpression(1));
@@ -120,7 +120,7 @@ namespace Vba.Language
             // check for Xor binary operator.
             if (context.Xor() != null
                 && context.boolExpression() != null
-                && context.boolExpression().Count == 2)
+                && context.boolExpression().Length == 2)
             {
                 var left = (bool)VisitBoolExpression(context.boolExpression(0));
                 var right = (bool)VisitBoolExpression(context.boolExpression(1));
@@ -155,7 +155,7 @@ namespace Vba.Language
         public override object VisitStringExpression(PreprocessorParser.StringExpressionContext context)
         {
             if ((context.AMP() != null || context.PLUS() != null) 
-                && context.stringExpression().Count == 2)
+                && context.stringExpression().Length == 2)
             {
                 var left = (string)VisitStringExpression(context.stringExpression(0));
                 var right = (string)VisitStringExpression(context.stringExpression(1));
@@ -181,7 +181,7 @@ namespace Vba.Language
         public override object VisitArithmeticExpression(PreprocessorParser.ArithmeticExpressionContext context)
         {
             if (context.MINUS() != null
-                && context.arithmeticExpression().Count == 1)
+                && context.arithmeticExpression().Length == 1)
             {
                 return -1 * (int)VisitArithmeticExpression(context.arithmeticExpression(0));
             }
@@ -194,7 +194,7 @@ namespace Vba.Language
                 return ParseFloat(context.FloatLiteral().GetText());
             }
 
-            Debug.Assert(context.arithmeticExpression().Count == 2);  // only operations left are binary.
+            Debug.Assert(context.arithmeticExpression().Length == 2);  // only operations left are binary.
             
             var left = (int)VisitArithmeticExpression(context.arithmeticExpression(0));
             var right = (int)VisitArithmeticExpression(context.arithmeticExpression(1));
